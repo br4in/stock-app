@@ -13,9 +13,9 @@ module.exports = function(app, request, stocks) {
             console.log(stock);
             var parameters = {
                 Normalized: false,
-                NumberOfDays: 365,
+                NumberOfDays: 3650,
                 DataPeriod: "Day",
-                Elements: [{Symbol: stock,Type: "price",Params: ["c"]}]
+                Elements: [{Symbol: stock,Type: "price",Params: ["ohlc"]}]
             };
             var url = 'http://dev.markitondemand.com/MODApis/Api/v2/InteractiveChart/json?parameters='+JSON.stringify(parameters);
             request.get({
@@ -25,7 +25,6 @@ module.exports = function(app, request, stocks) {
                     'Content-Type': 'application/json'
                 }
             }, function (e, r, b) {
-                console.log(b);
                 response.json(b);
             });
         });
@@ -38,12 +37,6 @@ module.exports = function(app, request, stocks) {
             };
             console.log(data.stocks);
             response.json(data);
-        });
-        
-    app.route('/addStock')
-        .get(function(request, response) {
-            var stock = request.query.stock;
-            stocks.push(stock);
         });
         
     app.route('/removeStock')

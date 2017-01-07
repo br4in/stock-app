@@ -7,17 +7,14 @@ var express = require("express"),
     io = require('socket.io').listen(server),
     bodyParser = require("body-parser"),
     request = require("request"),
-    stocks = ['AAPL', 'YHOO'];
+    stocks = ['AAPL'];
     
-
 app.use(express.static(path.join(__dirname, '/public')));
 app.use('/controllers', express.static(process.cwd() + '/app/controllers'));
 app.use('/js', express.static(process.cwd() + '/public/js'));
 app.use(bodyParser.urlencoded({ extended: false }));
 
 routes(app, request, stocks);
-
-
 
 io.sockets.on('connection', function(socket) {
     console.log('Connection');

@@ -8,25 +8,21 @@ $(document).ready(function(){
         seriesCounter = 0,
         names = [];
 
-    /*
-     * Create the chart when all data is loaded
-     * @returns {undefined}
-     */
-    
     // get stocks array from server and populate names array and chart
     socket.on('stocksArray', function(data) {
         console.log(JSON.stringify(data.stocks));
         names = data.stocks;
         getStocks();
     });
-    
+    // get new stock from server
     socket.on('stock', function(data) {
         console.log(JSON.stringify(data));
-        // push new stock to names array
         names.push(data.stock);
+        // then reload the chart
         getStocks();
     });
     
+    // !! fix dates !!
     function createChart() {
         Highcharts.stockChart('container', {
             rangeSelector: {
@@ -65,35 +61,24 @@ $(document).ready(function(){
             $.getJSON('https://stock-app-br4in.c9users.io/getStock?stock='+name, function (data) {
                 console.log('Name: '+ name + ' Data '+ JSON.stringify(data));
                 if (data.Elements !== undefined) {
-                    //console.log(JSON.stringify(data.Elements[0].DataSeries.close.values));
+                    //console.log(JSON.stringify(data.Elements[0].DataSeries.close.values)); !! uncomment to debug date array from server
                     seriesOptions[i] = {
                         name: name,
                         data: data.Elements[0].DataSeries.close.values
                     };
-
-                        // As we're loading the data asynchronously, we don't know what order it will arrive. So
+                    // As we're loading the data asynchronously, we don't know what order it will arrive. So
                     // we keep a counter and create the chart when all the data is loaded.
                     seriesCounter += 1;
 
                     if (seriesCounter === names.length) {
                         createChart();
                     }
-                } else {
-                    alert('undefined');
                 }
             });
         });
     }
-    
-    function getStocksArray(callback) {
-        $.getJSON('https://stock-app-br4in.c9users.io/getStocks', function(data) {
-            names = data.stocks;
-            console.log(names);
-            callback();
-        });
-    }
-    
-    // on new stock sent, get value from input and retrieve api data ---- emit new stock 
+
+    // send new stock to server
     $('#send-btn').click(function() {
         var label = $('#new-stock').val();
         socket.emit('send', { stock: label });
