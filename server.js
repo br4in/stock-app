@@ -5,7 +5,8 @@ var express = require("express"),
     http = require("http"),
     server = http.createServer(app),
     io = require('socket.io').listen(server),
-    bodyParser = require("body-parser");
+    bodyParser = require("body-parser"),
+    request = require("request");
     
 
 app.use(express.static(path.join(__dirname, '/public')));
@@ -13,7 +14,9 @@ app.use('/controllers', express.static(process.cwd() + '/app/controllers'));
 app.use('/js', express.static(process.cwd() + '/public/js'));
 app.use(bodyParser.urlencoded({ extended: false }));
 
-routes(app);
+routes(app, request);
+
+var stocks = ['AAPL'];
 
 io.sockets.on('connection', function(socket) {
     console.log('Connection');
