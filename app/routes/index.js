@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function(app, request) {
+module.exports = function(app, request, stocks) {
     
     app.route('/')
         .get(function(request, response) {
@@ -25,7 +25,33 @@ module.exports = function(app, request) {
                     'Content-Type': 'application/json'
                 }
             }, function (e, r, b) {
+                console.log(b);
                 response.json(b);
             });
         });
+    
+    app.route('/getStocks')
+        .get(function(request, response) {
+            console.log('stocks: ' + stocks);
+            var data = {
+                stocks: stocks
+            };
+            console.log(data.stocks);
+            response.json(data);
+        });
+        
+    app.route('/addStock')
+        .get(function(request, response) {
+            var stock = request.query.stock;
+            stocks.push(stock);
+        });
+        
+    app.route('/removeStock')
+        .get(function(request, response) {
+            var stock = request.query.stock;
+            var index = stocks.indexOf(stock);
+            if (index !== -1) {
+                stocks.splice(index, 1);
+            }
+         });
 };

@@ -6,7 +6,8 @@ var express = require("express"),
     server = http.createServer(app),
     io = require('socket.io').listen(server),
     bodyParser = require("body-parser"),
-    request = require("request");
+    request = require("request"),
+    stocks = ['AAPL', 'YHOO'];
     
 
 app.use(express.static(path.join(__dirname, '/public')));
@@ -14,20 +15,24 @@ app.use('/controllers', express.static(process.cwd() + '/app/controllers'));
 app.use('/js', express.static(process.cwd() + '/public/js'));
 app.use(bodyParser.urlencoded({ extended: false }));
 
-routes(app, request);
+routes(app, request, stocks);
 
-var stocks = ['AAPL'];
+
 
 io.sockets.on('connection', function(socket) {
     console.log('Connection');
-    socket.emit('message', { message: 'Welcome:'});
+    socket.emit('stocksArray', { stocks: stocks});
+    // send stock
     socket.on('send', function(data) {
-        console.log('data ' + JSON.stringify(data));
-        io.sockets.emit('message', data); 
+        console.log('data ' + JSON.stringify(data.stock));
+        stocks.push(data.stock);
+        console.log(stocks);
+        io.sockets.emit('stock', data);
     });
-    
+    // remove stock
     socket.on('remove', function(data) {
-        console.log('remove last ', data);
+        console.log('remove', data);
+        // remove stock from stocks array ...
         io.sockets.emit('remove', data);
     });
 });
