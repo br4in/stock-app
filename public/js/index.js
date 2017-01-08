@@ -1,34 +1,33 @@
 /* global $ Highcharts io*/
 
 $(document).ready(function(){
-    // connect to websocket
     var socket = io.connect('https://stock-app-br4in.c9users.io:8080');
     
     var seriesOptions = [],
         seriesCounter = 0,
         names = [];
-        
+    
     Array.prototype.combine = function(arr) {
         return this.map(function(v,i) {
             return [v, arr[i]];
         });
     };
 
-    // get stocks array from server and populate names array and chart
+    // get stocks array from server and reload
     socket.on('stocksArray', function(data) {
-        console.log(JSON.stringify(data.stocks));
+        console.log('Stock array : '+JSON.stringify(data.stocks));
         names = data.stocks;
+        seriesOptions = [];
         getStocks();
     });
     // get new stock from server
     socket.on('stock', function(data) {
-        console.log(JSON.stringify(data));
+        console.log('New stock : '+JSON.stringify(data));
         names.push(data.stock);
-        // then reload the chart
+        // reload the chart
         getStocks();
     });
     
-    // !! fix dates !!
     function createChart() {
         Highcharts.stockChart('container', {
             rangeSelector: {
@@ -75,7 +74,6 @@ $(document).ready(function(){
                     // As we're loading the data asynchronously, we don't know what order it will arrive. So
                     // we keep a counter and create the chart when all the data is loaded.
                     seriesCounter += 1;
-
                     if (seriesCounter === names.length) {
                         createChart();
                     }
