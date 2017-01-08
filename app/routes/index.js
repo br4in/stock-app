@@ -10,7 +10,7 @@ module.exports = function(app, request, stocks) {
     app.route('/getStock')
         .get(function(req, response) {
             var stock = req.query.stock;
-            console.log(stock);
+            console.log('Requesting '+stock);
             var parameters = {
                 Normalized: false,
                 NumberOfDays: 3650,
@@ -25,20 +25,17 @@ module.exports = function(app, request, stocks) {
                     'Content-Type': 'application/json'
                 }
             }, function (e, r, b) {
+                // convert dates to unix time 
+                var stockDates = [];
+                for (var i = 0; i < b.Dates.length; i++) {
+                    var unix_time = (Date.parse(b.Dates[i]));
+                    stockDates.push(unix_time);
+                }
+                b.unixDates = stockDates;
                 response.json(b);
             });
         });
     
-    app.route('/getStocks')
-        .get(function(request, response) {
-            console.log('stocks: ' + stocks);
-            var data = {
-                stocks: stocks
-            };
-            console.log(data.stocks);
-            response.json(data);
-        });
-        
     app.route('/removeStock')
         .get(function(request, response) {
             var stock = request.query.stock;

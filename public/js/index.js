@@ -7,6 +7,12 @@ $(document).ready(function(){
     var seriesOptions = [],
         seriesCounter = 0,
         names = [];
+        
+    Array.prototype.combine = function(arr) {
+        return this.map(function(v,i) {
+            return [v, arr[i]];
+        });
+    };
 
     // get stocks array from server and populate names array and chart
     socket.on('stocksArray', function(data) {
@@ -59,12 +65,12 @@ $(document).ready(function(){
         seriesCounter = 0;
         $.each(names, function (i, name) {
             $.getJSON('https://stock-app-br4in.c9users.io/getStock?stock='+name, function (data) {
-                console.log('Name: '+ name + ' Data '+ JSON.stringify(data));
                 if (data.Elements !== undefined) {
-                    //console.log(JSON.stringify(data.Elements[0].DataSeries.close.values)); !! uncomment to debug date array from server
+                    // combine unix dates and stock values
+                    var stockData = data.unixDates.combine(data.Elements[0].DataSeries.close.values);
                     seriesOptions[i] = {
                         name: name,
-                        data: data.Elements[0].DataSeries.close.values
+                        data: stockData
                     };
                     // As we're loading the data asynchronously, we don't know what order it will arrive. So
                     // we keep a counter and create the chart when all the data is loaded.

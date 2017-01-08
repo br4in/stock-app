@@ -17,13 +17,13 @@ app.use(bodyParser.urlencoded({ extended: false }));
 routes(app, request, stocks);
 
 io.sockets.on('connection', function(socket) {
-    console.log('Connection');
+    console.log('New socket connection');
     socket.emit('stocksArray', { stocks: stocks});
     // send stock
     socket.on('send', function(data) {
-        console.log('data ' + JSON.stringify(data.stock));
+        console.log('data sent' + JSON.stringify(data.stock));
         stocks.push(data.stock);
-        console.log(stocks);
+        console.log('stocks '+stocks);
         io.sockets.emit('stock', data);
     });
     // remove stock
