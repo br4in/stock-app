@@ -85,5 +85,36 @@ input:focus {
     border: 0.5px solid lightgray;
     box-shadow: -5px 5px 1px rgba(0, 0, 0, 0.5);
 }
-
  
+#remove-div {
+    width: 45%;
+    float: right;
+    padding: 5px;
+    margin-top: 2%;
+    border: 0.5px solid lightgray;
+    box-shadow: -5px 5px 1px rgba(0, 0, 0, 0.5);
+    overflow-y: scroll;
+}
+
+#stocks {
+    overflow: auto;
+    margin-bottom: 6%;
+    text-align: center;
+}
+
+#stocks button {
+    width: 55px;
+    height: 25px;
+    float: left;
+    border-radius: 10px;
+    background-color: dodgerblue;
+    color: white;
+    margin: 2px 5px;
+    border: none;
+    outline: none;
+}
+
+#stocks button:active {
+    outline: none;
+    box-shadow: 2px 1px 2px rgba(0, 0, 0, 0.5);
+}

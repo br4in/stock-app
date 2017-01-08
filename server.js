@@ -7,7 +7,7 @@ var express = require("express"),
     io = require('socket.io').listen(server),
     bodyParser = require("body-parser"),
     request = require("request"),
-    stocks = ['AAPL'];
+    stocks = ['AAPL', 'GOOGL', 'YHOO', 'NKE', 'SBUX'];
     
 app.use(express.static(path.join(__dirname, '/public')));
 app.use('/controllers', express.static(process.cwd() + '/app/controllers'));
@@ -31,6 +31,12 @@ io.sockets.on('connection', function(socket) {
         console.log('remove', data);
         // remove stock from stocks array ...
         io.sockets.emit('remove', data);
+        console.log('emitted', data);
+        var stock = data.stock;
+        var index = stocks.indexOf(stock);
+        if (index !== -1) {
+            stocks.splice(index, 1);
+        }
     });
 });
 

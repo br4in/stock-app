@@ -25,13 +25,15 @@ module.exports = function(app, request, stocks) {
                     'Content-Type': 'application/json'
                 }
             }, function (e, r, b) {
-                // convert dates to unix time 
-                var stockDates = [];
-                for (var i = 0; i < b.Dates.length; i++) {
-                    var unix_time = (Date.parse(b.Dates[i]));
-                    stockDates.push(unix_time);
+                if (b.Dates !== undefined) {
+                    // convert dates to unix time 
+                    var stockDates = [];
+                    for (var i = 0; i < b.Dates.length; i++) {
+                        var unix_time = (Date.parse(b.Dates[i]));
+                        stockDates.push(unix_time);
+                    }
+                    b.unixDates = stockDates;
                 }
-                b.unixDates = stockDates;
                 response.json(b);
             });
         });
