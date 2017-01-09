@@ -38,12 +38,26 @@ module.exports = function(app, request, stocks) {
             });
         });
     
-    app.route('/removeStock')
-        .get(function(request, response) {
-            var stock = request.query.stock;
-            var index = stocks.indexOf(stock);
-            if (index !== -1) {
-                stocks.splice(index, 1);
-            }
-         });
+    app.route('/lookupStock')
+        .get(function(req, response) {
+            var url = 'http://dev.markitondemand.com/api/v2/Lookup/json?input='+req.query.stock;
+            request.get({
+                url: url,
+                json: true,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }, function (e, r, b) {
+                // ensure that the symbol is valid and unique
+                for (var i = 0; i < b.length; i++) {
+                    if (b[i].Symbol === req.query.stock) {
+                        b = {
+                            stock: req.query.stock
+                        };
+                        break;
+                    }
+                }
+                response.json(b);
+            }); 
+        });
 };

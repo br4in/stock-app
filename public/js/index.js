@@ -89,7 +89,12 @@ $(document).ready(function(){
                 });
             });
         } else {
-            alert('Handle empty chart!');
+            var emptyData = [0, 0];
+            seriesOptions[0] = {
+                name: 'Empty',
+                data: emptyData
+            };
+            createChart();
         }
     }
     
@@ -114,15 +119,28 @@ $(document).ready(function(){
         getStocks();
         appendStocksBtns();
     }
+    
+    function isValidSymbol(symbol) {
+        $.getJSON('https://stock-app-br4in.c9users.io/lookupStock?stock='+symbol, function(data) {
+            if (data.stock) {
+                socket.emit('send', { stock: symbol });
+            } else {
+                alert('Invalid symbol');
+            }
+        });
+    }
 
     // send new stock to server
     $('#send-btn').click(function() {
-        var symbol = $('#new-stock').val();
-        socket.emit('send', { stock: symbol });
+        var symbol = $('#new-stock').val().toUpperCase();
+        if (names.indexOf(symbol) === -1) {
+            isValidSymbol(symbol);
+        } else {
+            alert('Stock already exist.');
+        }
     });
     
     $('#stocks').on('click', 'button', function(event) {
-        // remove button, emit name, update names, series, reload chart
         var symbol = $(this).attr('id');
         socket.emit('remove', { stock: symbol });
         $(this).remove();

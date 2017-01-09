@@ -20,7 +20,16 @@
             <div id="stocks-div">
                 <div id="add-div">
                     <p>Add new stocks</p>
-                    <input type="text" id="new-stock"/><button id="send-btn">Add</button>
+                    <input type="text" list="stocksNames" id="new-stock"/><button id="send-btn">Add</button>
+                    <!-- display a list of stocks, might be overwritten by validation function in js file -->
+                    <datalist id="stocksNames">
+                        <option value="AAPL">
+                        <option value="GOOGL">
+                        <option value="YHOO">
+                        <option value="NKE">
+                        <option value="SBUX">
+                        <option value="GE">
+                    </datalist>
                 </div>
                 <div id="remove-div">
                     <p>Remove existing</p><!-- display existing stocks for removal -->
