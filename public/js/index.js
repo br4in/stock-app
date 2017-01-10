@@ -198,14 +198,14 @@ $(document).ready(function(){
                 }
             }
         },
-   yAxis: {
-      gridLineColor: '#707073',
-      labels: {
-         style: {
-            color: '#E0E0E3'
-         }
-      },
-      lineColor: '#707073',
+        yAxis: {
+            gridLineColor: '#707073',
+            labels: {
+            style: {
+                color: '#E0E0E3'
+            }
+        },
+        lineColor: '#707073',
       minorGridLineColor: '#505053',
       tickColor: '#707073',
       tickWidth: 1,
