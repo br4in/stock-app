@@ -6,4 +6,4 @@
   -  I can remove stocks.
   -  I can see changes in real-time when any other user adds or removes a stock. For this you will need to use Web Sockets.
  
- Link to the app : https://stock-app-br4in.c9users.io/
+ Link to the app : https://stock-app-br4in.c9users.i
