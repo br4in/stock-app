@@ -1,3 +1,15 @@
+body {
+    background: linear-gradient(
+      rgba(0, 0, 0, 0.7), 
+      rgba(0, 0, 0, 0.7)
+    ), url('/img/stocks-bg.jpeg') no-repeat center center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    color: white;
+}
+
 #title-div {
     text-align: center;
 }
@@ -19,9 +31,8 @@
     padding: 15px;
 }
 
-canvas {
-    max-height: 450px;
-    background-color: whitesmoke;
+#container {
+    box-shadow: 5px 5px 1px rgba(255, 255, 255, 0.2);
 }
 
 #stocks-div {
@@ -31,16 +42,16 @@ canvas {
     min-height: 200px;
     margin-left: auto;
     margin-right: auto;
-    border-top: 1px solid black;
 }
 
 #add-div {
-    width: 45%;
-    float: left;
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
     padding: 5px;
-    margin-top: 2%;
-    border: 0.5px solid lightgray;
-    box-shadow: 5px 5px 1px rgba(0, 0, 0, 0.5);
+    margin-top: 1%;
+    box-shadow: 5px 5px 1px rgba(255, 255, 255, 0.2);
+    background: rgba(0, 0, 0, 0.1);
 }
 
 input {
@@ -74,25 +85,17 @@ input:focus {
 }
 
 #add-div p, #remove-div p{
-    margin-bottom: 10%;
+    margin-bottom: 5%;
 }
 
 #remove-div {
-    width: 45%;
-    float: right;
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
     padding: 5px;
-    margin-top: 2%;
-    border: 0.5px solid lightgray;
-    box-shadow: -5px 5px 1px rgba(0, 0, 0, 0.5);
-}
- 
-#remove-div {
-    width: 45%;
-    float: right;
-    padding: 5px;
-    margin-top: 2%;
-    border: 0.5px solid lightgray;
-    box-shadow: -5px 5px 1px rgba(0, 0, 0, 0.5);
+    margin-top: 1%;
+    box-shadow: 5px 5px 1px rgba(255, 255, 255, 0.2);
+    background: rgba(0, 0, 0, 0.1);
     overflow-y: scroll;
 }
 
@@ -117,4 +120,10 @@ input:focus {
 #stocks button:active {
     outline: none;
     box-shadow: 2px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+@media screen and (max-width: 700px) {
+    #remove-div, #add-div {
+        width: 85%;
+    }
 }
