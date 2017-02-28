@@ -1,7 +1,7 @@
 - Chart the Stock Market freecodecamp
 
 - Objectives:
-    - Build a full stack JavaScript app that is functionally similar to this http://watchstocks.herokuapp.com/ and deploy it to Heroku.
+    - Build a full stack JavaScript app that is functionally similar to this http://watchstocks.herokuapp.com/
     - I can view a graph displaying the recent trend lines for each added stock.
     - I can add new stocks by their symbol name.
     - I can remove stocks.
